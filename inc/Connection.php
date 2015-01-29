@@ -26,11 +26,28 @@ class Connection {
 
 	public function getStock($cod_prod,$cod_tienda){
 		$sql = "SELECT stock FROM tiendas_has_productos ".
-			"WHERE productos_idproductos=2 AND tiendas_idtiendas=2";
+			"WHERE productos_idproductos=".$cod_prod." AND tiendas_idtiendas=".$cod_tienda;
 		$q = $this->c->prepare($sql);
 		$q->execute();
-		return $q->fetch()['precio'];
+		return $q->fetch()['stock'];
 	}
+
+	public function getFamilias(){
+		$sql = "SELECT idfamilias,nombre FROM familias";
+		$q = $this->c->prepare($sql);
+		$q->execute();
+		return $q->fetchAll();
+	}
+
+	public function getProductosFamilia($cod_familia){
+		$sql = "SELECT idproductos, nombre, precio ".
+			"FROM productos WHERE familias_idfamilias = ".$cod_familia;
+		$q = $this->c->prepare($sql);
+		$q->execute();
+		return $q->fetchAll();
+	}
+
+
 
 
 

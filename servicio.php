@@ -19,12 +19,16 @@ class RaspberryAPI {
 
 	// TODO: obtiene todas las familias
 	function getFamilias(){
-		return "getPVP";
+		include "inc/Connection.php";
+		$conn = new Connection();
+		return $conn->getFamilias();
 	}
 
 	// TODO: obtiene el código de todas las familias
 	function getProductosFamilia($cod_familia){
-		return "getPVP";
+		include "inc/Connection.php";
+		$conn = new Connection();
+		return $conn->getProductosFamilia($cod_familia);
 	}
 
 }
