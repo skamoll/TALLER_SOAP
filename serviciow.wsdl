@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+                  xmlns:soap-enc="http://schemas.xmlsoap.org/soap/encoding/"
+                  xmlns:soap-env="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="piserver.dyndns.org"
+                  xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="piserver.dyndns.org">
+    <wsdl:types>
+        <xsd:schema targetNamespace="piserver.dyndns.org">
+            <xsd:complexType name="stringArray">
+                <xsd:complexContent>
+                    <xsd:restriction base="soap-enc:Array">
+                        <xsd:attribute ref="soap-enc:arrayType" wsdl:arrayType="xsd:string[]"/>
+                    </xsd:restriction>
+                </xsd:complexContent>
+            </xsd:complexType>
+            <xsd:complexType name="stringArrayArray">
+                <xsd:complexContent>
+                    <xsd:restriction base="soap-enc:Array">
+                        <xsd:attribute ref="soap-enc:arrayType" wsdl:arrayType="tns:stringArray[]"/>
+                    </xsd:restriction>
+                </xsd:complexContent>
+            </xsd:complexType>
+        </xsd:schema>
+    </wsdl:types>
+    <wsdl:message name="getPVPRequest">
+        <wsdl:part name="cod_prod" type="xsd:string"/>
+    </wsdl:message>
+    <wsdl:message name="getPVPResponse">
+        <wsdl:part name="getPVPReturn" type="xsd:string"/>
+    </wsdl:message>
+    <wsdl:message name="getStockRequest">
+        <wsdl:part name="cod_prod" type="xsd:string"/>
+        <wsdl:part name="cod_tienda" type="xsd:string"/>
+    </wsdl:message>
+    <wsdl:message name="getStockResponse">
+        <wsdl:part name="getStockReturn" type="xsd:string"/>
+    </wsdl:message>
+    <wsdl:message name="getFamiliasRequest"/>
+    <wsdl:message name="getFamiliasResponse">
+        <wsdl:part name="getFamiliasReturn" type="tns:stringArrayArray"/>
+    </wsdl:message>
+    <wsdl:message name="getProductosFamiliaRequest">
+        <wsdl:part name="cod_familia" type="xsd:string"/>
+    </wsdl:message>
+    <wsdl:message name="getProductosFamiliaResponse">
+        <wsdl:part name="getProductosFamiliaReturn" type="tns:stringArrayArray"/>
+    </wsdl:message>
+    <wsdl:portType name="RaspberryAPIPortType">
+        <wsdl:operation name="getPVP">
+            <wsdl:documentation>Obtiene el id del articulo para devolver su precio.</wsdl:documentation>
+            <wsdl:input message="tns:getPVPRequest"/>
+            <wsdl:output message="tns:getPVPResponse"/>
+        </wsdl:operation>
+        <wsdl:operation name="getStock">
+            <wsdl:documentation>Obtiene el código de producto y el código de tienda y devuelve el stock de dicho
+                artículo en dicha tienda.
+            </wsdl:documentation>
+            <wsdl:input message="tns:getStockRequest"/>
+            <wsdl:output message="tns:getStockResponse"/>
+        </wsdl:operation>
+        <wsdl:operation name="getFamilias">
+            <wsdl:documentation>Devuelve un listado de todas las famílias.</wsdl:documentation>
+            <wsdl:input message="tns:getFamiliasRequest"/>
+            <wsdl:output message="tns:getFamiliasResponse"/>
+        </wsdl:operation>
+        <wsdl:operation name="getProductosFamilia">
+            <wsdl:documentation>Obtiene el código de una família y muestra todos los artículo de ésta.
+            </wsdl:documentation>
+            <wsdl:input message="tns:getProductosFamiliaRequest"/>
+            <wsdl:output message="tns:getProductosFamiliaResponse"/>
+        </wsdl:operation>
+    </wsdl:portType>
+    <wsdl:binding name="RaspberryAPIBinding" type="tns:RaspberryAPIPortType">
+        <soap-env:binding xmlns="http://schemas.xmlsoap.org/wsdl/soap/" style="rpc"
+                          transport="http://schemas.xmlsoap.org/soap/http"/>
+        <wsdl:operation name="getPVP">
+            <soap-env:operation xmlns="http://schemas.xmlsoap.org/wsdl/soap/"
+                                soapAction="http://piserver.dyndns.org/DAW/DWES/SOAP/taller/serviciow.php?method=getPVP"
+                                style="rpc"/>
+            <wsdl:input>
+                <soap-env:body xmlns="http://schemas.xmlsoap.org/wsdl/soap/" use="encoded"
+                               encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap-env:body xmlns="http://schemas.xmlsoap.org/wsdl/soap/" use="encoded"
+                               encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="getStock">
+            <soap-env:operation xmlns="http://schemas.xmlsoap.org/wsdl/soap/"
+                                soapAction="http://piserver.dyndns.org/DAW/DWES/SOAP/taller/serviciow.php?method=getStock"
+                                style="rpc"/>
+            <wsdl:input>
+                <soap-env:body xmlns="http://schemas.xmlsoap.org/wsdl/soap/" use="encoded"
+                               encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap-env:body xmlns="http://schemas.xmlsoap.org/wsdl/soap/" use="encoded"
+                               encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="getFamilias">
+            <soap-env:operation xmlns="http://schemas.xmlsoap.org/wsdl/soap/"
+                                soapAction="http://piserver.dyndns.org/DAW/DWES/SOAP/taller/serviciow.php?method=getFamilias"
+                                style="rpc"/>
+            <wsdl:input>
+                <soap-env:body xmlns="http://schemas.xmlsoap.org/wsdl/soap/" use="encoded"
+                               encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap-env:body xmlns="http://schemas.xmlsoap.org/wsdl/soap/" use="encoded"
+                               encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="getProductosFamilia">
+            <soap-env:operation xmlns="http://schemas.xmlsoap.org/wsdl/soap/"
+                                soapAction="http://piserver.dyndns.org/DAW/DWES/SOAP/taller/serviciow.php?method=getProductosFamilia"
+                                style="rpc"/>
+            <wsdl:input>
+                <soap-env:body xmlns="http://schemas.xmlsoap.org/wsdl/soap/" use="encoded"
+                               encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap-env:body xmlns="http://schemas.xmlsoap.org/wsdl/soap/" use="encoded"
+                               encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:service name="RaspberryAPI">
+        <wsdl:documentation>Clase para implementar SOAP.</wsdl:documentation>
+        <wsdl:port name="RaspberryAPIPort" binding="tns:RaspberryAPIBinding">
+            <soap-env:address location="http://piserver.dyndns.org/DAW/DWES/SOAP/taller/serviciow.php"/>
+        </wsdl:port>
+    </wsdl:service>
+</wsdl:definitions>
