@@ -5,14 +5,16 @@ class RaspberryAPI {
 
 	// TODO: obtener precio del producto y devolverlo
 	function getPVP($cod_prod){
-
-		return $cod_prod;
+		include "inc/Connection.php";
+		$conn = new Connection();
+		return $conn->getPVP($cod_prod);
 	}
 
 	// TODO: obtener stock del producto segun tienda
 	function getStock($cod_prod,$cod_tienda){
-
-		return "getPVP";
+		include "inc/Connection.php";
+		$conn = new Connection();
+		return $conn->getStock($cod_prod,$cod_tienda);
 	}
 
 	// TODO: obtiene todas las familias
