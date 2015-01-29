@@ -14,7 +14,7 @@ class Connection {
 		$this->c->exec("SET CHARACTER SET utf8");      // Sets encoding UTF-8
 	}
 
-	// OBTIENE EL ID DEL USUARIO DADO
+	// OBTIENE EL PRECIO DEL ITEM DADO
 	public function getPVP($idproductos){
 		$sql = "SELECT precio ".
 			"FROM  `productos` ".
@@ -24,6 +24,7 @@ class Connection {
 		return $q->fetch()['precio'];
 	}
 
+	// OBTIENE EL STOCK DEL PRODUCTO Y TIENDA INDICADO
 	public function getStock($cod_prod,$cod_tienda){
 		$sql = "SELECT stock FROM tiendas_has_productos ".
 			"WHERE productos_idproductos=".$cod_prod." AND tiendas_idtiendas=".$cod_tienda;
@@ -32,6 +33,7 @@ class Connection {
 		return $q->fetch()['stock'];
 	}
 
+	// OBTIENE TODAS LAS FAMÍLIAS
 	public function getFamilias(){
 		$sql = "SELECT idfamilias,nombre FROM familias";
 		$q = $this->c->prepare($sql);
@@ -39,6 +41,7 @@ class Connection {
 		return $q->fetchAll();
 	}
 
+	// OBTIENE LOS PRODUCTOS DE LA FAMILIA INDICADA
 	public function getProductosFamilia($cod_familia){
 		$sql = "SELECT idproductos, nombre, precio ".
 			"FROM productos WHERE familias_idfamilias = ".$cod_familia;
